@@ -17,15 +17,10 @@ public class Hole extends Ball {
 	}
 
 	public boolean isBallOver(Ball ball) {
-		float rX = ball.getX() - x;
-		float rY = ball.getY() - y;
-		if (rX < 0) {
-			rX *= -1;
-		}
-		if (rY < 0) {
-			rY *= -1;
-		}
-		ballOver = (rX < radius) && (rY < radius);
+		double rX = Math.pow(ball.getX() - x,2);
+		double rY = Math.pow(ball.getY() - y,2);
+		double rR = Math.pow(radius,2);
+		ballOver = rX + rY <= rR;
 		return ballOver;
 	}
 }
