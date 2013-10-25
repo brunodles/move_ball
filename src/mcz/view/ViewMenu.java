@@ -7,10 +7,15 @@ import android.util.Log;
 public class ViewMenu extends ViewBase {
 
 	int holeRadius;
+	ViewMenuListener listener;
 
 	public ViewMenu(Context context) {
 		super(context);
 		Log.d("mcz", "ViewMenu");
+	}
+
+	public void setMenuListener(ViewMenuListener listener) {
+		this.listener = listener;
 	}
 
 	public int lessSize() {
@@ -39,6 +44,23 @@ public class ViewMenu extends ViewBase {
 		credit.setY(getHeight() - holeRadius);
 		credit.setText("Credit");
 		holes.add(credit);
+	}
+
+	public static interface ViewMenuListener {
+		public void onCreditsOver();
+
+		public void onStartOver();
+	}
+
+	@Override
+	public void onMoveBall() {
+		if ((holeBelowBall != null) && (listener != null)) {
+			if ("START".equalsIgnoreCase(holeBelowBall.getText())) {
+				listener.onStartOver();
+			} else {
+				listener.onCreditsOver();
+			}
+		}
 	}
 
 }

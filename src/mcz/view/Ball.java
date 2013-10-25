@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class Ball {
 
@@ -20,7 +19,7 @@ public class Ball {
 	}
 
 	public void draw(Canvas canvas) {
-		Log.d("mcz", String.format("x = %s y = %s radius = %s", x, y, radius));
+		//Log.d("mcz", String.format("x = %s y = %s radius = %s", x, y, radius));
 		canvas.drawCircle(x, y, radius, paint);
 		if (text == null) {
 			return;

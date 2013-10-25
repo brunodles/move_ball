@@ -12,17 +12,19 @@ import android.view.View.OnTouchListener;
 public abstract class ViewBase extends android.view.View implements
 		OnTouchListener {
 
-	public static int backgroundColor = Color.WHITE;
-	public static int ballColor = Color.BLACK;
+	public static int backgroundColor = Color.BLACK;
+	public static int ballColor = Color.WHITE;
 	private boolean alreadyDrawed = false;
 	//
 	protected Ball ball = new Ball(ballColor);
+	protected Hole holeBelowBall = null;
 	protected ArrayList<Hole> holes = new ArrayList<Hole>();
 
 	public ViewBase(Context context) {
 		super(context);
 		Log.d("mcz", "ViewBase");
 		ball.setRadius(50);
+		this.setOnTouchListener(this);
 	}
 
 	protected void firstDraw(Canvas canvas) {
@@ -36,30 +38,50 @@ public abstract class ViewBase extends android.view.View implements
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Log.d("mcz", "onDraw " + ball.getX() + " " + ball.getY());
+		// Log.d("mcz", "onDraw " + ball.getX() + " " + ball.getY());
 		super.onDraw(canvas);
+		canvas.drawColor(backgroundColor);
 		if (!alreadyDrawed) {
 			firstDraw(canvas);
 		}
-
-		for (Ball hole : holes) {
-			hole.draw(canvas);
-		}
-
+		drawHoles(canvas);
 		ball.draw(canvas);
 	}
 
+	private void drawHoles(Canvas canvas) {
+		try {
+			for (Ball hole : holes) {
+				hole.draw(canvas);
+			}
+		} catch (Exception e) {
+			sleep(10);
+			draw(canvas);
+		}
+	}
+
+	public static void sleep(long time) {
+		try {
+			Thread.sleep(time);
+		} catch (Exception e) {
+		}
+	}
+
 	public void moveBall(float x, float y) {
-		Log.d("mcz", String.format("X = %s Y = %s", x, y));
+		// Log.d("mcz", String.format("X = %s Y = %s", x, y));
 		ball.setX(x);
 		ball.setY(y);
-		invalidate();
+		postInvalidate();
 		checkHole();
+		onMoveBall();
 	}
+
+	public abstract void onMoveBall();
 
 	public void checkHole() {
 		for (Hole hole : holes) {
-			hole.isBallOver(ball);
+			if (hole.isOver(ball)) {
+				holeBelowBall = hole;
+			}
 		}
 	}
 
