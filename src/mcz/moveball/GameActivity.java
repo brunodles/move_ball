@@ -15,5 +15,11 @@ public class GameActivity extends Activity implements ViewGameListener {
 		canvas = new ViewGame(this);
 		setContentView(canvas);
 	}
+	
+	public void receive(){ 
+//		canvas.moveBall(x, y);
+	}
+	
+	
 
 }

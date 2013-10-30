@@ -19,6 +19,7 @@ public abstract class ViewBase extends android.view.View implements
 	protected Ball ball = new Ball(ballColor);
 	protected Hole holeBelowBall = null;
 	protected ArrayList<Hole> holes = new ArrayList<Hole>();
+	protected boolean transparent = false;
 
 	public ViewBase(Context context) {
 		super(context);
@@ -40,7 +41,7 @@ public abstract class ViewBase extends android.view.View implements
 	protected void onDraw(Canvas canvas) {
 		// Log.d("mcz", "onDraw " + ball.getX() + " " + ball.getY());
 		super.onDraw(canvas);
-		canvas.drawColor(backgroundColor);
+		canvas.drawColor(transparent ? Color.TRANSPARENT : backgroundColor);
 		if (!alreadyDrawed) {
 			firstDraw(canvas);
 		}
@@ -67,6 +68,25 @@ public abstract class ViewBase extends android.view.View implements
 	}
 
 	public void moveBall(float x, float y) {
+		ball.move(x, y);
+		checkBallPosition(ball);
+		postInvalidate();
+		checkHole();
+		onMoveBall();
+	}
+
+	private void checkBallPosition(Ball ball) {
+		int height = getHeight();
+		int width = getWidth();
+		if ((ball.getX() < 0) || (ball.getX() > width)) {
+			ball.setX(width - ball.getX());
+		}
+		if ((ball.getY() < 0) || (ball.getY() > height)) {
+			ball.setY(height - ball.getY());
+		}
+	}
+
+	public void setBallPosition(float x, float y) {
 		// Log.d("mcz", String.format("X = %s Y = %s", x, y));
 		ball.setX(x);
 		ball.setY(y);
@@ -97,8 +117,18 @@ public abstract class ViewBase extends android.view.View implements
 	public boolean onTouch(android.view.View view, MotionEvent motionEvent) {
 		float x = motionEvent.getX();
 		float y = motionEvent.getY();
-		moveBall(x, y);
+		setBallPosition(x, y);
 		return true;
 	}
+
+	public boolean isTransparent() {
+		return transparent;
+	}
+
+	public void setTransparent(boolean transparent) {
+		this.transparent = transparent;
+	}
+	
+	
 
 }

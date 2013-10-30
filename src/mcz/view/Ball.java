@@ -19,7 +19,8 @@ public class Ball {
 	}
 
 	public void draw(Canvas canvas) {
-		//Log.d("mcz", String.format("x = %s y = %s radius = %s", x, y, radius));
+		// Log.d("mcz", String.format("x = %s y = %s radius = %s", x, y,
+		// radius));
 		canvas.drawCircle(x, y, radius, paint);
 		if (text == null) {
 			return;
@@ -37,6 +38,11 @@ public class Ball {
 		ColorMatrix cm = new ColorMatrix(mx);
 
 		p.setColorFilter(new ColorMatrixColorFilter(cm));
+	}
+
+	public void move(float x, float y) {
+		this.x += x;
+		this.y += y;
 	}
 
 	public float getX() {
