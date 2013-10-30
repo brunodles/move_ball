@@ -77,11 +77,19 @@ public abstract class ViewBase extends android.view.View implements
 
 	public abstract void onMoveBall();
 
+	protected abstract void onBallOverHole(Hole hole);
+
 	public void checkHole() {
-		for (Hole hole : holes) {
-			if (hole.isOver(ball)) {
-				holeBelowBall = hole;
+		try {
+			for (Hole hole : holes) {
+				if (hole.isOver(ball)) {
+					holeBelowBall = hole;
+					onBallOverHole(hole);
+				}
 			}
+		} catch (Exception e) {
+			sleep(10);
+			checkHole();
 		}
 	}
 
@@ -92,7 +100,5 @@ public abstract class ViewBase extends android.view.View implements
 		moveBall(x, y);
 		return true;
 	}
-
-	// private class ThreadupdateScreen
 
 }

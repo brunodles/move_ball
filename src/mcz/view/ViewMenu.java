@@ -63,4 +63,10 @@ public class ViewMenu extends ViewBase {
 		}
 	}
 
+	@Override
+	protected void onBallOverHole(Hole hole) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

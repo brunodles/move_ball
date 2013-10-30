@@ -8,9 +8,12 @@ import android.graphics.Color;
 
 public class ViewGame extends ViewBase {
 
-	private static final long WAITING_TIME = 1000;
+	private static final int WAITING_TIME_LEVEL_DEDUCTION = 500;
+	private static final int MIN_WAITING_TIME = 1000;
+	private static final long START_WAITING_TIME = 10000;
 	//
 	private int balls = 5;
+	private int level = 1;
 	HolesThread holesThread;
 	Random random;
 	ViewGameListener viewGameListener;
@@ -35,7 +38,7 @@ public class ViewGame extends ViewBase {
 	}
 
 	public void changeHoles() {
-		sleep(WAITING_TIME);
+		sleep(calculateWaitingTime());
 		holes.clear();
 		int width = getWidth();
 		int height = getHeight();
@@ -47,6 +50,15 @@ public class ViewGame extends ViewBase {
 		} catch (Exception e) {
 		}
 		newHolesThread();
+	}
+
+	private long calculateWaitingTime() {
+		long result = START_WAITING_TIME
+				- (WAITING_TIME_LEVEL_DEDUCTION * level);
+		if (result < MIN_WAITING_TIME) {
+			result = MIN_WAITING_TIME;
+		}
+		return result;
 	}
 
 	private void newHole(int width, int height, int i) {
@@ -82,5 +94,13 @@ public class ViewGame extends ViewBase {
 
 	@Override
 	public void onMoveBall() {
+	}
+
+	@Override
+	protected void onBallOverHole(Hole hole) {
+		holes.remove(hole);
+		if (holes.isEmpty()) {
+			level++;
+		}
 	}
 }
