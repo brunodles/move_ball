@@ -19,6 +19,30 @@ public class GameActivity extends Activity implements ViewGameListener {
 	public void receive(){ 
 //		canvas.moveBall(x, y);
 	}
+
+	@Override
+	public void sendScore(int score) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendNextLevel(int level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendGameOver() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendTime(int time) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

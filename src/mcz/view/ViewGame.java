@@ -2,30 +2,35 @@ package mcz.view;
 
 import java.util.Random;
 
+import mcz.model.Player;
+import mcz.model.Player.PlayerListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
 public class ViewGame extends ViewBase {
 
-	private static final int WAITING_TIME_LEVEL_DEDUCTION = 500;
-	private static final int MIN_WAITING_TIME = 1000;
-	private static final long START_WAITING_TIME = 10000;
+	// private static final int WAITING_TIME_LEVEL_DEDUCTION = 500;
+	// private static final int MIN_WAITING_TIME = 1000;
+	// private static final long START_WAITING_TIME = 10000;
 	//
-	private int balls = 5;
-	private int level = 1;
+	// private int balls = 5;
+	// private int level = 1;
 	HolesThread holesThread;
 	Random random;
 	ViewGameListener viewGameListener;
+	Player player;
 
 	public ViewGame(Context context) {
 		super(context);
 		random = new Random();
 		holesThread = new HolesThread();
+		player = new Player();
 	}
 
 	public void setViewGameListener(ViewGameListener viewGameListener) {
 		this.viewGameListener = viewGameListener;
+		player.setListener(viewGameListener);
 	}
 
 	@Override
@@ -37,12 +42,12 @@ public class ViewGame extends ViewBase {
 		new Thread(holesThread).start();
 	}
 
-	public void changeHoles() {
+	public void initHoles() {
 		sleep(calculateWaitingTime());
 		holes.clear();
 		int width = getWidth();
 		int height = getHeight();
-		for (int i = 1; i <= balls; i++) {
+		for (int i = 1; i <= player.numHoles(); i++) {
 			newHole(width, height, i);
 		}
 		try {
@@ -53,15 +58,12 @@ public class ViewGame extends ViewBase {
 	}
 
 	private long calculateWaitingTime() {
-		long result = START_WAITING_TIME
-				- (WAITING_TIME_LEVEL_DEDUCTION * level);
-		if (result < MIN_WAITING_TIME) {
-			result = MIN_WAITING_TIME;
-		}
+		long result = player.timer();
 		return result;
 	}
 
 	private void newHole(int width, int height, int i) {
+		// TODO modificar score.
 		Hole hole = new Hole(Color.RED);
 		hole.setRadius(100);
 		do {
@@ -85,11 +87,11 @@ public class ViewGame extends ViewBase {
 
 		@Override
 		public void run() {
-			changeHoles();
+			initHoles();
 		}
 	}
 
-	public static interface ViewGameListener {
+	public static interface ViewGameListener extends PlayerListener {
 	}
 
 	@Override
@@ -98,9 +100,8 @@ public class ViewGame extends ViewBase {
 
 	@Override
 	protected void onBallOverHole(Hole hole) {
+		player.obtainHole(hole.getScore());
 		holes.remove(hole);
-		if (holes.isEmpty()) {
-			level++;
-		}
+		player.verifyGame(0);
 	}
 }

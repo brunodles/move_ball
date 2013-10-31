@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 public class Hole extends Ball {
 
 	boolean ballOver = false;
+	int score;
 
 	public Hole(int color) {
 		super(color);
@@ -30,5 +31,13 @@ public class Hole extends Ball {
 		double rR = Math.pow(radius - ball.radius, 2);
 		ballOver = (rX + rY) <= rR;
 		return ballOver;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 }

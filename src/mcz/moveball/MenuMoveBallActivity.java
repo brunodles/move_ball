@@ -5,12 +5,12 @@ import mcz.view.ViewMenu.ViewMenuListener;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 
 	ViewMenu canvas;
 	boolean starting = false;
-	boolean crediting = false; // xD
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,20 +24,30 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 		if (starting) {
 			return;
 		}
-		starting = true;
+		starting();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
+	}
+
+	public void starting() {
 		starting = true;
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				starting = false;
+			}
+		}, 5000); // 5 s
 	}
 
 	public void creditos() {
-		if(crediting){
+		if (starting) {
 			return;
 		}
-		crediting = true;
+		starting();
 		Intent creditoIntent = new Intent(this, CreditosActivity.class);
 		startActivity(creditoIntent);
-		crediting = true;
 	}
 
 	@Override

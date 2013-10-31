@@ -78,6 +78,9 @@ public class Level {
 	private void newTimerToNewLevel() {
 		timer -= 500; // mileseconds
 		chronometer = timer;
+		if (timer < 1000) { // 1 segundo
+			timer = 1000;
+		}
 	}
 	
 }
