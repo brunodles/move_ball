@@ -35,6 +35,18 @@ public class Player {
 		
 	}
 	
+	public int pointHoleLevel(int valueHole) {
+		return level.pointHoleLevel(valueHole);
+	}
+	
+	public int remainTimer() {
+		return level.remainTimer();
+	}
+	
+	public int numHoles() {
+		return level.getNumHoles();
+	}
+	
 	private void sendScoreToArduino() {
 		// enviar score para o arduino
 		

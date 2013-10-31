@@ -5,17 +5,18 @@ public class Level {
 	private int timer;
 	private int chronometer;
 	private int numHoles;
+	private int remainNumHoles;
 	private int actualLevel;
 	
 	public static int initialTimer = 10000; // mileseconds
-	public static int initialballs = 5; 
+	public static int initialHals  = 5; 
 	public static int initialLevel = 1;
 	
 	public Level() {
 		super();
 		timer 	    = initialTimer;
 		chronometer = initialTimer;
-		numHoles 	= initialballs;
+		numHoles 	= initialHals;
 		actualLevel = initialLevel;
 	}
 	
@@ -23,12 +24,23 @@ public class Level {
 	public boolean nextLevel() {		
 		if (passedLevel()) {
 			newTimerToNewLevel();
-			numHoles = initialballs;
+			numHoles 	   = initialHals;
+			remainNumHoles = initialHals;
 			actualLevel++;					
 			return true;
 		}
 		
 		return false;
+	}
+	
+	public int pointHoleLevel(int valueHole) {
+		int timePoint = (remainTimer() * 150) / timer;
+		
+		return actualLevel * valueHole * timePoint;
+	}
+	
+	public int getNumHoles() {
+		return numHoles;
 	}
 	
 	public int getActualLevel(){
@@ -44,7 +56,7 @@ public class Level {
 	}
 
 	public void obtainHole() {
-		numHoles --;
+		remainNumHoles --;
 	}
 	
 	public void decreaseTimer(int time) {
@@ -55,8 +67,12 @@ public class Level {
 		return chronometer <= 0;
 	}
 	
+	public int remainTimer() {
+		return timer - chronometer;
+	}
+	
 	private boolean passedLevel() {
-		return (numHoles == 0 && chronometer > 0);
+		return (remainNumHoles == 0 && chronometer > 0);
 	}
 	
 	private void newTimerToNewLevel() {
