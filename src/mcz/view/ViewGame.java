@@ -10,12 +10,7 @@ import android.graphics.Color;
 
 public class ViewGame extends ViewBase {
 
-	// private static final int WAITING_TIME_LEVEL_DEDUCTION = 500;
-	// private static final int MIN_WAITING_TIME = 1000;
-	// private static final long START_WAITING_TIME = 10000;
-	//
-	// private int balls = 5;
-	// private int level = 1;
+	private static final int HOLE_RADIUS = 100;
 	HolesThread holesThread;
 	Random random;
 	ViewGameListener viewGameListener;
@@ -65,10 +60,11 @@ public class ViewGame extends ViewBase {
 	private void newHole(int width, int height, int i) {
 		// TODO modificar score.
 		Hole hole = new Hole(Color.RED);
-		hole.setRadius(100);
+		hole.setRadius(HOLE_RADIUS);
+		int halfRadius = HOLE_RADIUS / 2;
 		do {
-			hole.setX(random.nextInt(width));
-			hole.setY(random.nextInt(height));
+			hole.setX(halfRadius + random.nextInt(width - HOLE_RADIUS));
+			hole.setY(halfRadius + random.nextInt(height - HOLE_RADIUS));
 		} while (isHoleOver(hole));
 		hole.setText("" + i);
 		holes.add(hole);
