@@ -32,13 +32,15 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 	public void starting() {
 		starting = true;
 		Handler handler = new Handler();
+		canvas.moveBallToInitialPosition();
 		handler.postDelayed(new Runnable() {
 
 			@Override
 			public void run() {
 				starting = false;
+				canvas.moveBallToInitialPosition();
 			}
-		}, 5000); // 5 s
+		}, 3000); // 3 s
 	}
 
 	public void creditos() {

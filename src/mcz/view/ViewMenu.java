@@ -54,18 +54,15 @@ public class ViewMenu extends ViewBase {
 
 	@Override
 	public void onMoveBall() {
-		if ((holeBelowBall != null) && (listener != null)) {
-			if ("START".equalsIgnoreCase(holeBelowBall.getText())) {
-				listener.onStartOver();
-			} else {
-				listener.onCreditsOver();
-			}
-		}
 	}
 
 	@Override
 	protected void onBallOverHole(Hole hole) {
-		// TODO Auto-generated method stub
+		if ("START".equalsIgnoreCase(hole.getText())) {
+			listener.onStartOver();
+		} else {
+			listener.onCreditsOver();
+		}
 		
 	}
 

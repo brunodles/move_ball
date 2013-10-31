@@ -17,9 +17,9 @@ public abstract class ViewBase extends android.view.View implements
 	private boolean alreadyDrawed = false;
 	//
 	protected Ball ball = new Ball(ballColor);
-	protected Hole holeBelowBall = null;
 	protected ArrayList<Hole> holes = new ArrayList<Hole>();
 	protected boolean transparent = false;
+	private float[] initialBallPosition = new float[2];
 
 	public ViewBase(Context context) {
 		super(context);
@@ -32,14 +32,19 @@ public abstract class ViewBase extends android.view.View implements
 		alreadyDrawed = true;
 		ball.setX(getWidth() / 2);
 		ball.setY(getHeight() / 2);
+		initialBallPosition[0] = ball.getX();
+		initialBallPosition[1] = ball.getY();
 		onFirstDraw(canvas);
+	}
+
+	public void moveBallToInitialPosition() {
+		setBallPosition(initialBallPosition[0], initialBallPosition[1]);
 	}
 
 	protected abstract void onFirstDraw(Canvas canvas);
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		// Log.d("mcz", "onDraw " + ball.getX() + " " + ball.getY());
 		super.onDraw(canvas);
 		canvas.drawColor(transparent ? Color.TRANSPARENT : backgroundColor);
 		if (!alreadyDrawed) {
@@ -71,7 +76,7 @@ public abstract class ViewBase extends android.view.View implements
 		ball.move(x, y);
 		checkBallPosition(ball);
 		postInvalidate();
-		checkHole();
+		checkHoles();
 		onMoveBall();
 	}
 
@@ -91,7 +96,7 @@ public abstract class ViewBase extends android.view.View implements
 		ball.setX(x);
 		ball.setY(y);
 		postInvalidate();
-		checkHole();
+		checkHoles();
 		onMoveBall();
 	}
 
@@ -99,17 +104,16 @@ public abstract class ViewBase extends android.view.View implements
 
 	protected abstract void onBallOverHole(Hole hole);
 
-	public void checkHole() {
+	public void checkHoles() {
 		try {
 			for (Hole hole : holes) {
 				if (hole.isOver(ball)) {
-					holeBelowBall = hole;
 					onBallOverHole(hole);
 				}
 			}
 		} catch (Exception e) {
 			sleep(10);
-			checkHole();
+			checkHoles();
 		}
 	}
 
@@ -128,7 +132,5 @@ public abstract class ViewBase extends android.view.View implements
 	public void setTransparent(boolean transparent) {
 		this.transparent = transparent;
 	}
-	
-	
 
 }
