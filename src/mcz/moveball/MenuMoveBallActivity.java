@@ -30,7 +30,8 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 	}
 
 	public void creditos() {
-
+		Intent creditoIntent = new Intent(this, CreditosActivity.class);
+		startActivity(creditoIntent);
 	}
 
 	@Override
