@@ -10,6 +10,7 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 
 	ViewMenu canvas;
 	boolean starting = false;
+	boolean crediting = false; // xD
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +31,13 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 	}
 
 	public void creditos() {
+		if(crediting){
+			return;
+		}
+		crediting = true;
 		Intent creditoIntent = new Intent(this, CreditosActivity.class);
 		startActivity(creditoIntent);
+		crediting = true;
 	}
 
 	@Override

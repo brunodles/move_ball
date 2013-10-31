@@ -1,12 +1,13 @@
 package mcz.moveball;
 
 import mcz.view.ViewCreditos;
+import mcz.view.ViewCreditos.ViewCreditosListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.FrameLayout;
 
-public class CreditosActivity extends Activity {
+public class CreditosActivity extends Activity implements ViewCreditosListener {
 
 	FrameLayout frameLayout;
 	
@@ -18,7 +19,7 @@ public class CreditosActivity extends Activity {
 		frameLayout = (FrameLayout) findViewById(R.id.teste);
 		
 		ViewCreditos viewCreditos = new ViewCreditos(this);
-		
+		viewCreditos.setListener(this);
 //		frameLayout.inflate(this, view, frameLayout);
 		frameLayout.addView(viewCreditos);
 		
@@ -31,6 +32,12 @@ public class CreditosActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.creditos, menu);
 		return true;
+	}
+
+	@Override
+	public void closeCreditos() {
+		finish();
+		
 	}
 
 }

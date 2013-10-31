@@ -6,16 +6,24 @@ import android.graphics.Color;
 
 public class ViewCreditos extends ViewBase {
 
+	private ViewCreditosListener listener;
+	
 	public ViewCreditos(Context context) {
 		super(context);
 
+		transparent = true;
+		
 		Hole hole = new Hole(Color.WHITE);
 		hole.setX(345);
-		hole.setY(615);
-		hole.setRadius(100);
-		hole.setText("Voltar");
+		hole.setY(1100);
+		hole.setRadius(150);
+		hole.setText("Back");
 
 		holes.add(hole);
+	}
+	
+	public void setListener(ViewCreditosListener listener) {
+		this.listener = listener;
 	}
 
 	@Override
@@ -29,5 +37,14 @@ public class ViewCreditos extends ViewBase {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	protected void onBallOverHole(Hole hole) {
+		listener.closeCreditos();
+	}	
+	
+	public static interface ViewCreditosListener{
+		public void closeCreditos();
+	};
 
 }
