@@ -41,6 +41,10 @@ public class Player {
 
 	}
 
+	public int score() {
+		return score.getScore();
+	}
+	
 	public boolean timeOver() {
 		return level.timeOver();
 	}

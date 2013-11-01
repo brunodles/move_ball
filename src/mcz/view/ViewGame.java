@@ -66,6 +66,8 @@ public class ViewGame extends ViewBase {
 			
 			verify = player.verifyGame(1000); // 1 segundo
 			
+			Log.d("mcz SCORE", "SCORE: "+player.score());
+			
 			if (verify) {
 				// Sai do while
 				conditionGame = false;
@@ -88,6 +90,7 @@ public class ViewGame extends ViewBase {
 		// TODO modificar score.
 		Hole hole = new Hole(Color.RED);
 		hole.setRadius(HOLE_RADIUS);
+		hole.setScore(i);
 		int halfRadius = HOLE_RADIUS / 2;
 		do {
 			hole.setX(halfRadius + random.nextInt(width - HOLE_RADIUS));
