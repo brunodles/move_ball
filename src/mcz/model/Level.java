@@ -1,5 +1,7 @@
 package mcz.model;
 
+import android.util.Log;
+
 public class Level {
 
 	private int timer;
@@ -9,23 +11,28 @@ public class Level {
 	private int actualLevel;
 	
 	public static int initialTimer = 10000; // mileseconds
-	public static int initialHals  = 5; 
+	public static int initialHales  = 5; 
 	public static int initialLevel = 1;
 	
 	public Level() {
 		super();
-		timer 	    = initialTimer;
-		chronometer = initialTimer;
-		numHoles 	= initialHals;
-		actualLevel = initialLevel;
+		Log.d("mcz Level", "Construtor Level");
+		timer 	       = initialTimer;
+		chronometer    = initialTimer;
+		numHoles 	   = initialHales;
+		remainNumHoles = initialHales;
+		actualLevel    = initialLevel;
 	}
 	
 	
 	public boolean nextLevel() {		
+		Log.d("mcz nextLevel", "remainNumHoles HOLE: "+remainNumHoles);
+		Log.d("mcz nextLevel", "chronometer: "+chronometer);
 		if (passedLevel()) {
+			Log.d("mcz nextLevel", "TRUE PassedLevel");
 			newTimerToNewLevel();
-			numHoles 	   = initialHals;
-			remainNumHoles = initialHals;
+			numHoles 	   = initialHales;
+			remainNumHoles = initialHales;
 			actualLevel++;					
 			return true;
 		}
@@ -56,7 +63,9 @@ public class Level {
 	}
 
 	public void obtainHole() {
+		Log.d("mcz obtainHole", "remainNumHoles: "+remainNumHoles);
 		remainNumHoles --;
+		Log.d("mcz obtainHole", "remainNumHoles AFTER: "+remainNumHoles);
 	}
 	
 	public void decreaseTimer(int time) {
@@ -76,7 +85,7 @@ public class Level {
 	}
 	
 	private void newTimerToNewLevel() {
-		timer -= 500; // mileseconds
+		timer -= 1000; // mileseconds
 		chronometer = timer;
 		if (timer < 1000) { // 1 segundo
 			timer = 1000;

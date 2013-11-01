@@ -7,14 +7,17 @@ import mcz.model.Player.PlayerListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 public class ViewGame extends ViewBase {
 
 	private static final int HOLE_RADIUS = 100;
+
 	HolesThread holesThread;
 	Random random;
 	ViewGameListener viewGameListener;
 	Player player;
+	boolean conditionGame = true;
 
 	public ViewGame(Context context) {
 		super(context);
@@ -38,23 +41,47 @@ public class ViewGame extends ViewBase {
 	}
 
 	public void initHoles() {
-		sleep(calculateWaitingTime());
+		conditionGame = true;
+		
+		sleep(3000); // 3 segundos
+		
 		holes.clear();
-		int width = getWidth();
+		int width  = getWidth();
 		int height = getHeight();
+		
 		for (int i = 1; i <= player.numHoles(); i++) {
 			newHole(width, height, i);
 		}
+		
 		try {
 			this.postInvalidate();
 		} catch (Exception e) {
+			newHolesThread();			
 		}
-		newHolesThread();
-	}
-
-	private long calculateWaitingTime() {
-		long result = player.timer();
-		return result;
+		
+		boolean verify = false;		 
+		do 
+		{
+			sleep(1000); // 1 segundo
+			
+			verify = player.verifyGame(1000); // 1 segundo
+			
+			if (verify) {
+				// Sai do while
+				conditionGame = false;
+			} else {
+				if (player.timeOver()) {					
+					holes.clear();
+					this.postInvalidate();					
+					break;
+				}
+			}						
+		} while (conditionGame);
+		
+		if (conditionGame == false) {
+			Log.d("mcz initHole", "PASSOU DE LEVEL");
+			newHolesThread();
+		}
 	}
 
 	private void newHole(int width, int height, int i) {
@@ -95,9 +122,9 @@ public class ViewGame extends ViewBase {
 	}
 
 	@Override
-	protected void onBallOverHole(Hole hole) {
+	protected void onBallOverHole(Hole hole) {		
 		player.obtainHole(hole.getScore());
 		holes.remove(hole);
-		player.verifyGame(0);
+		conditionGame = player.verifyGame(0);
 	}
 }

@@ -1,5 +1,7 @@
 package mcz.model;
 
+import android.util.Log;
+
 public class Player {
 
 	private Score score;
@@ -18,7 +20,7 @@ public class Player {
 		sendScoreToArduino();
 	}
 
-	public void verifyGame(int time) {
+	public boolean verifyGame(int time) {
 		level.decreaseTimer(time);
 
 		boolean result = level.nextLevel();
@@ -26,16 +28,23 @@ public class Player {
 		if (result) {
 			sendMsgNextLevelToArduino();
 			sendTimerToArduino(level.getTimer());
-		} else if (level.timeOver()) {
+			return true;
+		} else if (timeOver()) {
+			Log.d("mcz verifyGame", "TimeOVER TRUE");
 			sendMsgGameOverToArduino();
 			sendScoreToArduino();
+			return false;
 		} else {
 			sendTimerToArduino(level.getChronometer());
-
+			return false;
 		}
 
 	}
 
+	public boolean timeOver() {
+		return level.timeOver();
+	}
+	
 	public int pointHoleLevel(int valueHole) {
 		return level.pointHoleLevel(valueHole);
 	}
@@ -85,7 +94,7 @@ public class Player {
 		}
 	}
 
-	// TODO vê isso aqui.
+	// TODO v�� isso aqui.
 	// public int getHoles(){
 	// // return level.
 	// }
