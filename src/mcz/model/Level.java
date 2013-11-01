@@ -16,7 +16,6 @@ public class Level {
 	
 	public Level() {
 		super();
-		Log.d("mcz Level", "Construtor Level");
 		timer 	       = initialTimer;
 		chronometer    = initialTimer;
 		numHoles 	   = initialHales;
@@ -62,10 +61,8 @@ public class Level {
 		return chronometer;
 	}
 
-	public void obtainHole() {
-		Log.d("mcz obtainHole", "remainNumHoles: "+remainNumHoles);
+	public void obtainHole() {		
 		remainNumHoles --;
-		Log.d("mcz obtainHole", "remainNumHoles AFTER: "+remainNumHoles);
 	}
 	
 	public void decreaseTimer(int time) {
