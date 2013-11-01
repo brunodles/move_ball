@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 
 public class Ball {
 
@@ -27,7 +28,8 @@ public class Ball {
 		}
 		invertPaint(paint);
 		paint.setTextSize(radius - (radius / 10));
-		canvas.drawText(text, x - (radius / 3), y + (radius / 3), paint);
+		paint.setTextAlign(Align.CENTER);
+		canvas.drawText(text, x, y + paint.getTextSize() / 3, paint);
 		paint.setColorFilter(null);
 	}
 

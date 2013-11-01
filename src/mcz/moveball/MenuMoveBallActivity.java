@@ -40,7 +40,7 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 				starting = false;
 				canvas.moveBallToInitialPosition();
 			}
-		}, 3000); // 3 s
+		}, 1000); // 3 s
 	}
 
 	public void creditos() {
