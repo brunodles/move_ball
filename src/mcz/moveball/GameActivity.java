@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.AmarinoIntent;
 
@@ -18,13 +20,21 @@ public class GameActivity extends Activity implements ViewGameListener {
 	private final String BLUETOOTH_ADDRESS = "";
 	ArduinoReceiver receiver;
 	IntentFilter intentFilter;
+	TextView score;
+	TextView time;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_game);
+
+		score = (TextView) findViewById(R.id.txtScore);
+		time = (TextView) findViewById(R.id.txtTime);
+		FrameLayout frameLayout = (FrameLayout) findViewById(R.id.game);
+
 		canvas = new ViewGame(this);
 		canvas.setViewGameListener(this);
-		setContentView(canvas);
+		frameLayout.addView(canvas);
 
 		Amarino.connect(this, BLUETOOTH_ADDRESS);
 
@@ -41,22 +51,46 @@ public class GameActivity extends Activity implements ViewGameListener {
 
 	@Override
 	public void sendScore(int score) {
-		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'S', score);
+		// Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'S', score);
+		Log.d("mcz.bruno", "sendScore " + score);
+		changeScoreOnAndroid(score);
+	}
+
+	private void changeScoreOnAndroid(final int scoreValue) {
+		this.score.post(new Runnable() {
+
+			@Override
+			public void run() {
+				score.setText("" + scoreValue);
+			}
+		});
 	}
 
 	@Override
 	public void sendNextLevel(int level) {
-		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'L', level);
+		// Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'L', level);
 	}
 
 	@Override
 	public void sendGameOver() {
-		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'G', "");
+		// Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'G', "");
 	}
 
 	@Override
 	public void sendTime(int time) {
+		Log.d("mcz.bruno", "sendTime " + time);
+		changeTimeOnAndroid(time);
 		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'T', time);
+	}
+
+	private void changeTimeOnAndroid(final int timeValue) {
+		this.time.post(new Runnable() {
+
+			@Override
+			public void run() {
+				time.setText("" + timeValue);
+			}
+		});
 	}
 
 	private class ArduinoReceiver extends BroadcastReceiver {
