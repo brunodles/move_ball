@@ -23,7 +23,7 @@ void loop() {
   lcd.clear();
   Principal(); 
   transicao();
-  msgAlerta("fimDeJogo");
+  msgAlerta("Msg Android!");
   
 //    x = analogRead(pinX);
 //    y = analogRead(pinY);
@@ -52,35 +52,19 @@ void loop() {
   }
  
   void setScore(int scoreAndroid){
-     int Score = scoreAndroid;
-  if(Score>=0 && Score <10){
-    lcd.setCursor(1,1);
-    lcd.print("0000");
-    lcd.setCursor(5,1);
-    lcd.print(Score);
-  }else
-    if(Score>=10 && Score<100){
-    lcd.setCursor(1,1);
-    lcd.print("000");
-    lcd.setCursor(4,1);
-    lcd.print(Score);
-  }else
-    if(Score>=100 && Score<1000){
-    lcd.setCursor(1,1);
-    lcd.print("00");
-    lcd.setCursor(3,1);
-    lcd.print(Score);
-  }else
-    if(Score>=1000 && Score<10000){
-    lcd.setCursor(1,1);
-    lcd.print("0");
-    lcd.setCursor(2,1);
-    lcd.print(Score);
-  }else
-    if(Score>=10000 && Score<=99999){
-    lcd.setCursor(1,1);
-    lcd.print(Score);
-    }  
+     String score = String(scoreAndroid);
+     lcd.setCursor(1,1);
+     int tamanho = score.length();
+     
+     String texto = "";     
+     while (tamanho < 5 ){
+       texto+="0";
+       tamanho++;
+     }       
+   
+    texto+=score;           
+    lcd.print(texto);
+       
   } //Fim setScore
   
   void setTimer(int timerAndroid){
@@ -114,14 +98,17 @@ void loop() {
   
   
   void msgAlerta(String msgAndroid){
-    if (msgAndroid=="levelUp"){      
-       efeitoDuasLinhas("Passou de Nivel!");
-        lcd.clear(); 
-    }else
-     if (msgAndroid=="fimDeJogo"){
-      efeitoDuasLinhas("Fim de Jogo!"); 
-       }
-       
+    int tamanho = msgAndroid.length();
+    String texto = "";
+    int spaco = (16-tamanho)/2;
+    
+    for (int i=0; i<spaco;i++){
+    texto += " ";
+      
+    Serial.println(spaco);
+    }
+    
+    efeitoDuasLinhas(texto+=msgAndroid);
     delay(1500);
     lcd.clear();
    }
