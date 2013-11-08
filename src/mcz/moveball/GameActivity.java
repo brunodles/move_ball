@@ -83,6 +83,7 @@ public class GameActivity extends Activity implements ViewGameListener {
 
 	@Override
 	public void sendTime(int time) {
+		time /= 1000;
 		Log.d("mcz.bruno", "sendTime " + time);
 		changeTimeOnAndroid(time);
 		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'T', time);
@@ -93,7 +94,7 @@ public class GameActivity extends Activity implements ViewGameListener {
 
 			@Override
 			public void run() {
-				time.setText("" + timeValue / 1000);
+				time.setText("" + timeValue);
 			}
 		});
 	}
