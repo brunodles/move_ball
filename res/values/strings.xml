@@ -6,7 +6,9 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_creditos">CreditosActivity</string>
-	<string name="name_project">Move Ball</string>
-	<string name="description_project">Projeto Desenvolvido como forma de avalização para a matéria de Arduino.</string>
-	<string name="team_project">Bruno de Lima \nIrineu Tenório \nRachid Calazans \nWillian Accioly</string>
+    <string name="name_project">Move Ball</string>
+    <string name="description_project">Projeto Desenvolvido como forma de avalização para a matéria de Arduino.</string>
+    <string name="team_project">Bruno de Lima \nIrineu Tenório \nRachid Calazans \nWillian Accioly</string>
+    <string name="title_activity_game_over">GameOverActivity</string>
+	<string name="game_over">Game Over</string>
 </resources>
