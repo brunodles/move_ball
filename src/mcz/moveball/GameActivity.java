@@ -17,7 +17,7 @@ import at.abraxas.amarino.AmarinoIntent;
 public class GameActivity extends Activity implements ViewGameListener {
 
 	ViewGame canvas;
-	private final String BLUETOOTH_ADDRESS = "";
+	private final String BLUETOOTH_ADDRESS = "001109010639";
 	ArduinoReceiver receiver;
 	IntentFilter intentFilter;
 	TextView score;
@@ -73,7 +73,10 @@ public class GameActivity extends Activity implements ViewGameListener {
 
 	@Override
 	public void sendGameOver() {
-		// Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'G', "");
+		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'G', "");
+		Intent it = new Intent(this, GameOverActivity.class);
+		startActivity(it);
+		finish();
 	}
 
 	@Override

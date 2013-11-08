@@ -19,7 +19,8 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -31,6 +32,10 @@
             android:name="mcz.moveball.CreditosActivity"
             android:label="@string/title_activity_creditos"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="mcz.moveball.GameOverActivity"
+            android:label="@string/title_activity_game_over" >
         </activity>
     </application>
 
