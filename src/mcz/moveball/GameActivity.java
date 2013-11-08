@@ -17,7 +17,7 @@ import at.abraxas.amarino.AmarinoIntent;
 public class GameActivity extends Activity implements ViewGameListener {
 
 	ViewGame canvas;
-	private final String BLUETOOTH_ADDRESS = "001109010639";
+	private final String BLUETOOTH_ADDRESS = "00:11:09:01:06:39";
 	ArduinoReceiver receiver;
 	IntentFilter intentFilter;
 	TextView score;
@@ -49,13 +49,6 @@ public class GameActivity extends Activity implements ViewGameListener {
 		// canvas.moveBall(x, y);
 	}
 
-	@Override
-	public void sendScore(int score) {
-		// Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'S', score);
-		Log.d("mcz.bruno", "sendScore " + score);
-		changeScoreOnAndroid(score);
-	}
-
 	private void changeScoreOnAndroid(final int scoreValue) {
 		this.score.post(new Runnable() {
 
@@ -67,13 +60,22 @@ public class GameActivity extends Activity implements ViewGameListener {
 	}
 
 	@Override
+	public void sendScore(int score) {
+		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'S', score);
+		Log.d("mcz.bruno", "sendScore " + score);
+		changeScoreOnAndroid(score);
+	}
+
+	@Override
 	public void sendNextLevel(int level) {
-		// Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'L', level);
+		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'G', "Level "
+				+ level + "!");
 	}
 
 	@Override
 	public void sendGameOver() {
-		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'G', "");
+		Log.d("mcz", "sendGameOver GAME OVER ");
+		Amarino.sendDataToArduino(this, BLUETOOTH_ADDRESS, 'G', "Game Over");
 		Intent it = new Intent(this, GameOverActivity.class);
 		startActivity(it);
 		finish();
@@ -91,7 +93,7 @@ public class GameActivity extends Activity implements ViewGameListener {
 
 			@Override
 			public void run() {
-				time.setText("" + timeValue/1000);
+				time.setText("" + timeValue / 1000);
 			}
 		});
 	}
@@ -103,7 +105,11 @@ public class GameActivity extends Activity implements ViewGameListener {
 
 			if (intent.getAction() == AmarinoIntent.ACTION_RECEIVED) {
 				int posicao[] = intent.getIntArrayExtra("");
-				Log.d("posicao array: ", posicao.toString());
+				Log.d("mcz", "posicao array: " + posicao.toString());
+			}
+
+			if (intent.getAction() == AmarinoIntent.ACTION_CONNECTED) {
+				Log.d("mcz", "ACTION_CONNECTED ");
 			}
 
 		}

@@ -6,11 +6,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import at.abraxas.amarino.Amarino;
 
 public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 
 	ViewMenu canvas;
 	boolean starting = false;
+	private final String BLUETOOTH_ADDRESS = "00:11:09:01:06:39";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,7 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 		canvas = new ViewMenu(this.getApplicationContext());
 		canvas.setMenuListener(this);
 		setContentView(canvas);
+//		Amarino.connect(this, BLUETOOTH_ADDRESS);
 	}
 
 	public void iniciarJogo() {
