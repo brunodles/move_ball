@@ -1,5 +1,8 @@
 package mcz.moveball;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import mcz.view.ViewGame;
 import mcz.view.ViewGame.ViewGameListener;
 import android.app.Activity;
@@ -23,10 +26,15 @@ public class GameActivity extends Activity implements ViewGameListener {
 	TextView score;
 	TextView time;
 
+	private static final String patternStr = "(\\d*?),(\\d*?)";
+	Pattern pattern;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
+		
+		pattern = Pattern.compile(patternStr);
 
 		score = (TextView) findViewById(R.id.txtScore);
 		time = (TextView) findViewById(R.id.txtTime);
@@ -98,15 +106,26 @@ public class GameActivity extends Activity implements ViewGameListener {
 			}
 		});
 	}
-
 	private class ArduinoReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			Log.d("mcz pos", "onReceive");
 
 			if (intent.getAction() == AmarinoIntent.ACTION_RECEIVED) {
-				int posicao[] = intent.getIntArrayExtra("");
-				Log.d("mcz", "posicao array: " + posicao.toString());
+				
+				int dataType = intent.getIntExtra(AmarinoIntent.EXTRA_DATA_TYPE, -1);
+				if (dataType == AmarinoIntent.STRING_EXTRA){
+					String pos = intent.getStringExtra(AmarinoIntent.EXTRA_DATA);
+					Matcher matcher = pattern.matcher(pos);
+					if (matcher.find()) {
+						int x = Integer.parseInt(matcher.group(1));
+						int y = Integer.parseInt(matcher.group(2));
+						canvas.moveBall(x, y);
+					}
+					Log.d("mcz pos", "posicao array: " + pos);
+				}
+				
 			}
 
 			if (intent.getAction() == AmarinoIntent.ACTION_CONNECTED) {

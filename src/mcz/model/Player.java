@@ -15,9 +15,11 @@ public class Player {
 	}
 
 	public void obtainHole(int pointHole) {
+		Log.d("mcz obtainHole", "Obtainhole "+pointHole);
 		level.obtainHole();
 		score.addPoints(pointHole);
 		sendScoreToArduino();
+		
 	}
 
 	public boolean verifyGame(int time) {
