@@ -90,13 +90,12 @@ public class ViewGame extends ViewBase {
 		// TODO modificar score.
 		Hole hole = new Hole(Color.RED);
 		hole.setRadius(HOLE_RADIUS);
-		hole.setScore(i);
+		hole.setScore(player.getHoleScore(i));
 		int halfRadius = HOLE_RADIUS / 2;
 		do {
 			hole.setX(halfRadius + random.nextInt(width - HOLE_RADIUS));
 			hole.setY(halfRadius + random.nextInt(height - HOLE_RADIUS));
 		} while (isHoleOver(hole));
-		hole.setText("" + i);
 		holes.add(hole);
 	}
 

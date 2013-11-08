@@ -88,7 +88,7 @@ public class GameActivity extends Activity implements ViewGameListener {
 
 			@Override
 			public void run() {
-				time.setText("" + timeValue);
+				time.setText("" + timeValue/1000);
 			}
 		});
 	}

@@ -40,9 +40,8 @@ public class Level {
 	}
 	
 	public int pointHoleLevel(int valueHole) {
-		int timePoint = (remainTimer() * 150) / timer;
-		
-		return actualLevel * valueHole * timePoint;
+//		int timePoint = (remainTimer() * 150) / timer;
+		return actualLevel * valueHole;
 	}
 	
 	public int getNumHoles() {
@@ -70,7 +69,7 @@ public class Level {
 	}
 	
 	public boolean timeOver() {
-		return chronometer <= 0;
+		return chronometer < 0;
 	}
 	
 	public int remainTimer() {
@@ -88,5 +87,4 @@ public class Level {
 			timer = 1000;
 		}
 	}
-	
 }

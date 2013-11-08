@@ -39,5 +39,8 @@ public class Hole extends Ball {
 
 	public void setScore(int score) {
 		this.score = score;
+		if (text == null) {
+			text = "" + score;
+		}
 	}
 }

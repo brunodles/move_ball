@@ -112,4 +112,8 @@ public class Player {
 
 		public void sendTime(int time);
 	}
+
+	public int getHoleScore(int holeIndex) {
+		return level.pointHoleLevel(holeIndex);
+	}
 }
