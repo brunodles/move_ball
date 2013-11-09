@@ -21,7 +21,6 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 		canvas = new ViewMenu(this.getApplicationContext());
 		canvas.setMenuListener(this);
 		setContentView(canvas);
-		// Amarino.connect(this, BLUETOOTH_ADDRESS);
 		arduino = new ArduinoController(canvas, this);
 		arduino.registerReceiverConnect();
 	}
@@ -39,7 +38,6 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 		starting();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
-		finish();
 	}
 
 	public void starting() {

@@ -4,7 +4,6 @@ import mcz.receiver.ArduinoController;
 import mcz.view.ViewGameOver;
 import mcz.view.ViewGameOver.ViewGameOverListener;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
@@ -35,8 +34,8 @@ public class GameOverActivity extends Activity implements ViewGameOverListener {
 
 	@Override
 	public void closeGameOver() {
-		Intent it = new Intent(this, MenuMoveBallActivity.class);
-		startActivity(it);
+//		Intent it = new Intent(this, MenuMoveBallActivity.class);
+//		startActivity(it);
 		finish();
 
 	}

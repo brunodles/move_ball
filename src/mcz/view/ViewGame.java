@@ -42,44 +42,41 @@ public class ViewGame extends ViewBase {
 
 	public void initHoles() {
 		conditionGame = true;
-		
+
 		sleep(3000); // 3 segundos
-		
+
 		holes.clear();
-		int width  = getWidth();
+		int width = getWidth();
 		int height = getHeight();
-		
+
 		for (int i = 1; i <= player.numHoles(); i++) {
 			newHole(width, height, i);
 		}
-		
+
 		try {
 			this.postInvalidate();
 		} catch (Exception e) {
-			newHolesThread();			
+			newHolesThread();
 		}
-		
-		boolean verify = false;		 
-		do 
-		{
+
+		boolean verify = false;
+		do {
 			sleep(100); // 1 segundo
-			
+
 			verify = player.verifyGame(100); // 1 segundo
-			
-			Log.d("mcz SCORE", "SCORE: "+player.score());
-			
+
+			Log.d("mcz SCORE", "SCORE: " + player.score());
+
 			if (verify) {
 				// Sai do while
 				conditionGame = false;
-			} else {
-				if (player.timeOver()) {					
-					holes.clear();
-					this.postInvalidate();					
-					break;
-				}
-			}						
+			} else if (player.timeOver()) {
+				holes.clear();
+				this.postInvalidate();
+				break;
+			}
 		} while (conditionGame);
-		
+
 		if (conditionGame == false) {
 			Log.d("mcz initHole", "PASSOU DE LEVEL");
 			newHolesThread();
@@ -124,7 +121,7 @@ public class ViewGame extends ViewBase {
 	}
 
 	@Override
-	protected void onBallOverHole(Hole hole) {		
+	protected void onBallOverHole(Hole hole) {
 		player.obtainHole(hole.getScore());
 		holes.remove(hole);
 	}
