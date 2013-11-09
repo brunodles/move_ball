@@ -40,8 +40,8 @@ public class Level {
 	}
 	
 	public int pointHoleLevel(int valueHole) {
-//		int timePoint = (remainTimer() * 150) / timer;
-		return actualLevel * valueHole;
+		int timePoint = (remainTimer() * 150) / timer;
+		return actualLevel * valueHole * (1+timePoint);
 	}
 	
 	public int getNumHoles() {

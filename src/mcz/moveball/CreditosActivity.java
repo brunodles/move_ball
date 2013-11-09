@@ -1,5 +1,6 @@
 package mcz.moveball;
 
+import mcz.receiver.ArduinoController;
 import mcz.view.ViewCreditos;
 import mcz.view.ViewCreditos.ViewCreditosListener;
 import android.app.Activity;
@@ -10,21 +11,28 @@ import android.widget.FrameLayout;
 public class CreditosActivity extends Activity implements ViewCreditosListener {
 
 	FrameLayout frameLayout;
-	
+	ArduinoController arduino;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_creditos);
-		
+
 		frameLayout = (FrameLayout) findViewById(R.id.teste);
-		
+
 		ViewCreditos viewCreditos = new ViewCreditos(this);
 		viewCreditos.setListener(this);
-//		frameLayout.inflate(this, view, frameLayout);
+		// frameLayout.inflate(this, view, frameLayout);
 		frameLayout.addView(viewCreditos);
-		
-		
-		
+
+		arduino = new ArduinoController(viewCreditos, this);
+		arduino.registerReceiverConnect();
+	}
+
+	@Override
+	protected void onDestroy() {
+		arduino.unregisterReceiver();
+		super.onDestroy();
 	}
 
 	@Override
@@ -37,7 +45,7 @@ public class CreditosActivity extends Activity implements ViewCreditosListener {
 	@Override
 	public void closeCreditos() {
 		finish();
-		
+
 	}
 
 }

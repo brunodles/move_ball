@@ -1,5 +1,6 @@
 package mcz.moveball;
 
+import mcz.receiver.ArduinoController;
 import mcz.view.ViewMenu;
 import mcz.view.ViewMenu.ViewMenuListener;
 import android.app.Activity;
@@ -11,7 +12,8 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 
 	ViewMenu canvas;
 	boolean starting = false;
-	private final String BLUETOOTH_ADDRESS = "00:11:09:01:06:39";
+	// private final String BLUETOOTH_ADDRESS = "00:11:09:01:06:39";
+	ArduinoController arduino;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,15 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 		canvas = new ViewMenu(this.getApplicationContext());
 		canvas.setMenuListener(this);
 		setContentView(canvas);
-//		Amarino.connect(this, BLUETOOTH_ADDRESS);
+		// Amarino.connect(this, BLUETOOTH_ADDRESS);
+		arduino = new ArduinoController(canvas, this);
+		arduino.registerReceiverConnect();
+	}
+
+	@Override
+	protected void onDestroy() {
+		arduino.unregisterReceiver();
+		super.onDestroy();
 	}
 
 	public void iniciarJogo() {
@@ -29,6 +39,7 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 		starting();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
+		finish();
 	}
 
 	public void starting() {
