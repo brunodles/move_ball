@@ -62,9 +62,9 @@ public class ViewGame extends ViewBase {
 		boolean verify = false;		 
 		do 
 		{
-			sleep(1000); // 1 segundo
+			sleep(100); // 1 segundo
 			
-			verify = player.verifyGame(1000); // 1 segundo
+			verify = player.verifyGame(100); // 1 segundo
 			
 			Log.d("mcz SCORE", "SCORE: "+player.score());
 			
@@ -127,6 +127,5 @@ public class ViewGame extends ViewBase {
 	protected void onBallOverHole(Hole hole) {		
 		player.obtainHole(hole.getScore());
 		holes.remove(hole);
-		conditionGame = player.verifyGame(0);
 	}
 }
