@@ -22,13 +22,18 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 		canvas.setMenuListener(this);
 		setContentView(canvas);
 		arduino = new ArduinoController(canvas, this);
-		arduino.registerReceiverConnect();
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onResume() {
+		arduino.registerReceiverConnect();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
 		arduino.unregisterReceiver();
-		super.onDestroy();
+		super.onPause();
 	}
 
 	public void iniciarJogo() {

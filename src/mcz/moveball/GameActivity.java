@@ -31,14 +31,18 @@ public class GameActivity extends Activity implements ViewGameListener {
 		frameLayout.addView(canvas);
 
 		arduino = new ArduinoController(canvas, this);
-		arduino.registerReceiverConnect();
-
 	}
 
 	@Override
-	protected void onDestroy() {
-		unregisterReceiver(arduino);
-		super.onDestroy();
+	protected void onResume() {
+		arduino.registerReceiverConnect();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		arduino.unregisterReceiver();
+		super.onPause();
 	}
 
 	public void receive() {

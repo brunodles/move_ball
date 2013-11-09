@@ -22,20 +22,24 @@ public class GameOverActivity extends Activity implements ViewGameOverListener {
 		frameLayout.addView(viewGameOver);
 
 		arduino = new ArduinoController(viewGameOver, this);
-		arduino.registerReceiverConnect();
-
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onResume() {
+		arduino.registerReceiverConnect();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
 		arduino.unregisterReceiver();
-		super.onDestroy();
+		super.onPause();
 	}
 
 	@Override
 	public void closeGameOver() {
-//		Intent it = new Intent(this, MenuMoveBallActivity.class);
-//		startActivity(it);
+		// Intent it = new Intent(this, MenuMoveBallActivity.class);
+		// startActivity(it);
 		finish();
 
 	}

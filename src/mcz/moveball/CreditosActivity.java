@@ -4,6 +4,7 @@ import mcz.receiver.ArduinoController;
 import mcz.view.ViewCreditos;
 import mcz.view.ViewCreditos.ViewCreditosListener;
 import android.app.Activity;
+import android.content.ReceiverCallNotAllowedException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.FrameLayout;
@@ -26,13 +27,18 @@ public class CreditosActivity extends Activity implements ViewCreditosListener {
 		frameLayout.addView(viewCreditos);
 
 		arduino = new ArduinoController(viewCreditos, this);
-		arduino.registerReceiverConnect();
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onResume() {
+		arduino.registerReceiverConnect();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
 		arduino.unregisterReceiver();
-		super.onDestroy();
+		super.onPause();
 	}
 
 	@Override
