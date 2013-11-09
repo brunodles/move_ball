@@ -1,14 +1,11 @@
 #include <LiquidCrystal.h>
 #include <MeetAndroid.h>
 
-MeetAndroid meetAndroid;
-// initialize the library with the numbers of the interface pins
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+  LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+  MeetAndroid meetAndroid;
   
   int pinX = A0;
   int pinY = A1;
-  
-//  int pinSw = 13;
 
   int x = 0;
   int y = 0;
@@ -32,7 +29,7 @@ void loop() {
   
 } //Fim do loop
 
-void mandarXY(){
+  void mandarXY(){
     x = analogRead(pinX);
     y = analogRead(pinY);
 
@@ -40,7 +37,7 @@ void mandarXY(){
   sprintf(buffer,"%d,%d",x,y);
   meetAndroid.send(buffer);
 
-}//fim mandarXY
+  }//fim mandarXY
 
   void getMsgAndroid(byte flag, byte numOfValues)
   {
