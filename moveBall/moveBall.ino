@@ -4,7 +4,7 @@
 MeetAndroid meetAndroid;
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-  //teste
+  
   int pinX = A0;
   int pinY = A1;
   
@@ -29,16 +29,44 @@ void setup() {
 
 void loop() {
 //  lcd.clear();
+ 
   Principal(); 
   meetAndroid.receive();
-  
-    x = analogRead(pinX);
-    y = analogRead(pinY);
-
-  meetAndroid.send(x+','+y);
+  mandarXY();
+  delay(5);
 //    sw = digitalRead(pinSw);
   
 } //Fim do loop
+
+void mandarXY(){
+    x = analogRead(pinX);
+    y = analogRead(pinY);
+//  String p = String(x);
+//  meetAndroid.send(p);
+
+
+  char buffer[15];
+  sprintf(buffer,"%d,%d",x,y);
+  meetAndroid.send(buffer);
+
+
+
+//  int length = meetAndroid.stringLength();
+  
+  // define an array with the appropriate size which will store the string
+//  char data[length];
+  
+  // tell MeetAndroid to put the string into your prepared array
+//  meetAndroid.getString(data);
+  
+  // go and do something with the string, here we simply send it back to Android
+//  meetAndroid.send(data);
+  
+//  for (int i=0; i<length-1; i++)
+//  {
+//        meetAndroid.send(data[i]);
+//  }
+}
 
   void getMsgAndroid(byte flag, byte numOfValues)
   {
@@ -48,7 +76,6 @@ void loop() {
     String messagem = "";  
   
     for (int i=0; i<length-1; i++){
-	meetAndroid.send(data[i]);
         messagem+=data[i];     
     }
     msgAlerta(messagem);
@@ -118,6 +145,7 @@ void loop() {
   
   
   void msgAlerta(String msgAndroid){
+    lcd.clear();
     int tamanho = msgAndroid.length();
     String texto = "";
     int spaco = (16-tamanho)/2;
@@ -131,7 +159,7 @@ void loop() {
     efeitoDuasLinhas(texto+=msgAndroid);
     delay(200);
     lcd.clear();
-   }
+   } //fim msgAlenta
  
   void efeitoDuasLinhas(String valor){
   for (int i=0; i<=2; i++){
