@@ -12,11 +12,7 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
   int x = 0;
   int y = 0;
-  
-  int r= 0;
-//  int sw = 0;
-  
-  
+   
 void setup() {
   lcd.begin(16, 2);
   Serial.begin(9600);
@@ -28,45 +24,23 @@ void setup() {
 }
 
 void loop() {
-//  lcd.clear();
- 
+
   Principal(); 
   meetAndroid.receive();
   mandarXY();
-  delay(5);
-//    sw = digitalRead(pinSw);
+  delay(10);
   
 } //Fim do loop
 
 void mandarXY(){
     x = analogRead(pinX);
     y = analogRead(pinY);
-//  String p = String(x);
-//  meetAndroid.send(p);
-
 
   char buffer[15];
   sprintf(buffer,"%d,%d",x,y);
   meetAndroid.send(buffer);
 
-
-
-//  int length = meetAndroid.stringLength();
-  
-  // define an array with the appropriate size which will store the string
-//  char data[length];
-  
-  // tell MeetAndroid to put the string into your prepared array
-//  meetAndroid.getString(data);
-  
-  // go and do something with the string, here we simply send it back to Android
-//  meetAndroid.send(data);
-  
-//  for (int i=0; i<length-1; i++)
-//  {
-//        meetAndroid.send(data[i]);
-//  }
-}
+}//fim mandarXY
 
   void getMsgAndroid(byte flag, byte numOfValues)
   {
@@ -79,17 +53,17 @@ void mandarXY(){
         messagem+=data[i];     
     }
     msgAlerta(messagem);
-  }
+  }//fim getMsgAndroid
 
   void recebeScore(byte flag, byte numOfValues){
   int score = meetAndroid.getInt();
   setScore(score);
-  }
+  }//fim receveScore
 
   void recebeTime(byte flag, byte numOfValues){
   int time = meetAndroid.getInt();
   setTimer(time);
-  }
+  }//fim recebeTime
 
   void Principal(){
   lcd.setCursor(1,0);
