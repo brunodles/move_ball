@@ -12,7 +12,6 @@ public class MenuMoveBallActivity extends Activity implements ViewMenuListener {
 
 	ViewMenu canvas;
 	boolean starting = false;
-	// private final String BLUETOOTH_ADDRESS = "00:11:09:01:06:39";
 	ArduinoController arduino;
 
 	@Override

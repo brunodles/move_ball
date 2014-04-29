@@ -14,7 +14,7 @@ import at.abraxas.amarino.AmarinoIntent;
 
 public class ArduinoController extends BroadcastReceiver {
 
-	private final String BLUETOOTH_ADDRESS = "00:11:09:01:06:39";
+	private final String BLUETOOTH_ADDRESS = "20:13:10:30:05:98";
 	ViewBase canvas;
 	Context context;
 

@@ -4,7 +4,6 @@ import mcz.receiver.ArduinoController;
 import mcz.view.ViewCreditos;
 import mcz.view.ViewCreditos.ViewCreditosListener;
 import android.app.Activity;
-import android.content.ReceiverCallNotAllowedException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.FrameLayout;
